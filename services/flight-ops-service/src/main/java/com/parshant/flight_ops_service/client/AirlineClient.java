@@ -1,6 +1,5 @@
 package com.parshant.flight_ops_service.client;
 
-
 import com.parshant.Response.AircraftResponse;
 import com.parshant.Response.AirlineResponse;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -32,7 +32,7 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         config.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JacksonJsonDeserializer.class.getName());
-        config.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "com.zosh.common_lib.event");
+        config.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "com.parshant.event");
         return new DefaultKafkaConsumerFactory<>(config);
     }
 

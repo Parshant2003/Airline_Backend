@@ -1,5 +1,5 @@
 server:
-  port: 5001
+  port: 5003
 spring:
   application:
     name: booking-service
@@ -11,3 +11,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: booking-service-group
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true

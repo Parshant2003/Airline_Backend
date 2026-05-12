@@ -11,4 +11,3 @@ public class LocationClientFallback implements LocationClient {
         return null;
     }
 }
-
