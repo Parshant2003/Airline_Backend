@@ -6,7 +6,7 @@
 		<groupId>com.parshant</groupId>
 		<artifactId>cloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+
 	</parent>
 	<artifactId>api-gateway</artifactId>
 	<name/>
@@ -59,6 +59,18 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<to>
+						<image>parshantbisht2003/gds-api-gateway:1.0.0</image>
+					</to>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

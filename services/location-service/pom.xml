@@ -6,7 +6,6 @@
 		<groupId>com.parshant</groupId>
 		<artifactId>services</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<artifactId>location-service</artifactId>
@@ -112,6 +111,18 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<to>
+						<image>parshantbisht2003/gds-location:1.0.0</image>
+					</to>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

@@ -17,6 +17,13 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
 
+razorpay:
+  api:
+    key: rzp_test_XXXXXXXXXXXXXXXX  # dashboard se lo
+    secret: XXXXXXXXXXXXXXXXXXXXXX
+  callback:
+    base-url: http://localhost:5006  # port 5006 match!
+
 eureka:
   client:
     register-with-eureka: true
