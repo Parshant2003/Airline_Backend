@@ -11,8 +11,8 @@
 <description>Airline GDS Microservice Parent</description>
 
 <modules>
-    <module>common-lib</module>
     <module>cloud</module>
+    <module>common-lib</module>
     <module>services</module>
 </modules>
 
