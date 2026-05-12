@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="api-gateway" />
         <module name="common-lib" />
         <module name="seat-service" />
         <module name="user-service" />
         <module name="airline-core-service" />
+        <module name="service-registry" />
       </profile>
       <profile name="Annotation profile for AirLine System" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -31,6 +33,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="airline-core-service" options="-parameters" />
       <module name="ancillary-service" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
       <module name="booking-service" options="-parameters" />
       <module name="common-lib" options="-parameters" />
       <module name="flight-ops-service" options="-parameters" />
@@ -38,6 +41,7 @@
       <module name="payment-service" options="-parameters" />
       <module name="pricing-service" options="-parameters" />
       <module name="seat-service" options="-parameters" />
+      <module name="service-registry" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>
