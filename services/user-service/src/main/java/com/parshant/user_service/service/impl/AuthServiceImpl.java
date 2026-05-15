@@ -1,26 +1,25 @@
 package com.parshant.user_service.service.impl;
 
-
 import com.parshant.Response.AuthResponse;
 import com.parshant.dto.UserDTO;
 import com.parshant.emuns.UserRole;
+import com.parshant.exception.UserException;
 import com.parshant.user_service.config.JwtProvider;
 import com.parshant.user_service.mapper.UserMapper;
 import com.parshant.user_service.model.User;
 import com.parshant.user_service.repository.UserRepository;
 import com.parshant.user_service.service.AuthService;
-import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -40,14 +39,14 @@ public class AuthServiceImpl implements AuthService {
         5. Return token and user information
     */
     @Override
-    public AuthResponse signup(UserDTO req) throws Exception {
+    public AuthResponse signup(UserDTO req) throws UserException {
         User existingUser = userRepository.findByEmail(req.getEmail());
         if (existingUser != null) {
-            throw new Exception("Email already registered");
+            throw new UserException("Email already registered");
         }
 
         if (req.getRole() == UserRole.ROLE_SYSTEM_ADMIN) {
-            throw new Exception("Cannot register as SYSTEM_ADMIN");
+            throw new UserException("Cannot register as SYSTEM_ADMIN");
         }
 
         User createdUser = new User();
@@ -83,9 +82,8 @@ public class AuthServiceImpl implements AuthService {
         4. Generate JWT token
         5. Return token and user information
     */
-
     @Override
-    public AuthResponse login(String email, String password) throws Exception {
+    public AuthResponse login(String email, String password) throws UserException {
         Authentication authentication = authenticate(email, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -103,19 +101,16 @@ public class AuthServiceImpl implements AuthService {
         return response;
     }
 
-    private Authentication authenticate(String email, String password) throws Exception {
+    private Authentication authenticate(String email, String password) throws UserException {
         UserDetails userDetails = customUserDetailsService
                 .loadUserByUsername(email);
         if (userDetails == null) {
-            throw new Exception("User not found with email: " + email);
+            throw new UserException("User not found with email: " + email);
         }
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new Exception("Invalid password");
+            throw new UserException("Invalid password");
         }
         return new UsernamePasswordAuthenticationToken(
                 email, null, userDetails.getAuthorities());
     }
-
-
-
 }

@@ -1,6 +1,5 @@
 package com.parshant.airline_core_service.repository;
 
-
 import com.parshant.airline_core_service.model.Aircraft;
 import com.parshant.airline_core_service.model.Airline;
 import com.parshant.emuns.AircraftStatus;

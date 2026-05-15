@@ -3,6 +3,8 @@ package com.parshant.location_service.controller;
 import com.parshant.Request.AirportRequest;
 import com.parshant.Response.AirportResponse;
 import com.parshant.Response.ApiResponse;
+import com.parshant.exception.AirportException;
+import com.parshant.exception.CityException;
 import com.parshant.location_service.service.AirportService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,19 +23,19 @@ public class AirportController {
 
     @PostMapping
     public ResponseEntity<AirportResponse> createAirport(@Valid @RequestBody AirportRequest request)
-            throws Exception {
+            throws AirportException, CityException {
         return ResponseEntity.status(HttpStatus.CREATED).body(airportService.createAirport(request));
     }
 
-//    @PostMapping("/bulk")
-//    public ResponseEntity<List<AirportResponse>> createBulkAirports(
-//            @Valid @RequestBody List<AirportRequest> requests)
-//            throws Exception {
-//        return ResponseEntity.status(HttpStatus.CREATED).body(airportService.createBulkAirports(requests));
-//    }
+    @PostMapping("/bulk")
+    public ResponseEntity<List<AirportResponse>> createBulkAirports(
+            @Valid @RequestBody List<AirportRequest> requests)
+            throws AirportException, CityException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(airportService.createBulkAirports(requests));
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AirportResponse> getAirportById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<AirportResponse> getAirportById(@PathVariable Long id) throws AirportException {
         return ResponseEntity.ok(airportService.getAirportById(id));
     }
 
@@ -51,12 +53,12 @@ public class AirportController {
     @PutMapping("/{id}")
     public ResponseEntity<AirportResponse> updateAirport(
             @PathVariable Long id,
-            @Valid @RequestBody AirportRequest request) throws Exception {
+            @Valid @RequestBody AirportRequest request) throws AirportException, CityException {
         return ResponseEntity.ok(airportService.updateAirport(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteAirport(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ApiResponse> deleteAirport(@PathVariable Long id) throws AirportException {
         airportService.deleteAirport(id);
         return ResponseEntity.ok(new ApiResponse("Airport deleted successfully"));
     }

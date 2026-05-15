@@ -1,5 +1,6 @@
 package com.parshant.user_service.model;
 
+
 import com.parshant.emuns.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -55,7 +56,12 @@ public class User {
     private LocalDateTime lastLogin;
 
 
+//    @JsonIgnore
+//    private List<Long> passengers = new ArrayList<>();
 
 
 }
+
+
+
 

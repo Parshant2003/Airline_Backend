@@ -1,6 +1,5 @@
 package com.parshant.location_service.mapper;
 
-
 import com.parshant.Request.AirportRequest;
 import com.parshant.Response.AirportResponse;
 import com.parshant.location_service.model.Airport;
@@ -27,11 +26,11 @@ public class AirportMapper {
                 .iataCode(airport.getIataCode())
                 .name(airport.getName())
                 .detailedName(airport.getDetailedName())
-       //         .timeZone(airport.getTimeZone())
+                .timeZone(airport.getTimeZone())
                 .address(airport.getAddress())
                 .city(CityMapper.toResponse(airport.getCity()))
                 .geoCode(airport.getGeoCode())
-//                .analytics(airport.getAnalytics())
+                .analytics(airport.getAnalytics())
                 .build();
     }
 
@@ -44,9 +43,8 @@ public class AirportMapper {
         if (request.getName() != null) {
             existingAirport.setName(request.getName());
         }
-
         if (request.getTimeZone() != null) {
-          //  existingAirport.setTimeZone(request.getTimeZone());
+            existingAirport.setTimeZone(request.getTimeZone());
         }
         if (request.getAddress() != null) {
             existingAirport.setAddress(request.getAddress());

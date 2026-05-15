@@ -42,6 +42,4 @@ public interface AirlineRepository extends JpaRepository<Airline, Long> {
 
     /** Used for flight search: find all airlines belonging to a given alliance. */
     List<Airline> findAllByAllianceIgnoreCase(String alliance);
-
-    Optional<Object> findByIdAndOwnerId(Long id, Long ownerId);
 }
