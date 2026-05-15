@@ -1,49 +1,94 @@
 package com.parshant.location_service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.parshant.embeddable.Address;
+import com.parshant.embeddable.Analytics;
 import com.parshant.embeddable.GeoCode;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+import java.time.ZoneId;
+
+@Entity
+@Table(name = "airports", indexes = {
+        @Index(name = "idx_airport_iata", columnList = "iataCode"),
+        @Index(name = "idx_airport_city_id", columnList = "city_id")
+})
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "city"})
 public class Airport {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Long id;
 
-    @Column(unique = true,nullable = false,length = 3)
+    @Column(nullable = false, length = 3, unique = true)
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String iataCode;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String name;
+
+    @Column(name = "time_zone_id", length = 50)
+    private String timeZoneId;
 
     @Embedded
     private Address address;
 
+    // Same bounded context — direct JPA relationship
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private City city;
+
     @Embedded
     private GeoCode geoCode;
 
-    @Column(name = "time_zone_id",length = 50)
-    private String timeZoneId;
+    @Embedded
+    private Analytics analytics;
 
-    //Relation ->1 city have many airport
-    @ManyToOne
-    @JsonIgnore
-    private City city;
-
-    @JsonIgnore
     @Transient
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public ZoneId getTimeZone() {
+        return timeZoneId != null ? ZoneId.of(timeZoneId) : null;
+    }
+
+    public void setTimeZone(ZoneId zoneId) {
+        this.timeZoneId = zoneId != null ? zoneId.getId() : null;
+    }
+
+    @Transient
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public String getDetailedName() {
         if (city != null && city.getCountryCode() != null) {
             return name.toUpperCase() + "/" + city.getCountryCode();
         }
         return name.toUpperCase();
+    }
+
+    @Transient
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public String getCityName() {
+        return city != null ? city.getName() : null;
+    }
+
+    @Transient
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public String getCountryName() {
+        return city != null ? city.getCountryName() : null;
+    }
+
+    @Transient
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public String getCountryCode() {
+        return city != null ? city.getCountryCode() : null;
     }
 }

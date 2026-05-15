@@ -55,15 +55,15 @@ public class Airline {
     @Embedded
     private Support support;
 
-    // Cross-service reference: stored as ID (City lives in another service) // konsi city me present hai
+    // Cross-service reference: stored as ID (City lives in another service)
     @Column(name = "headquarters_city_id")
     private Long headquartersCityId;
 
-    // Cross-service reference: stored as ID (User lives in user-service)  //kis user ne bani hai yeah airline
+    // Cross-service reference: stored as ID (User lives in user-service)
     @Column(name = "owner_id", updatable = false, nullable = false)
     private Long ownerId;
 
-    @Column(name = "updated_by_user_id")    // kis user ne update kia hai ise ??
+    @Column(name = "updated_by_user_id")
     private Long updatedById;
 
     @CreatedDate

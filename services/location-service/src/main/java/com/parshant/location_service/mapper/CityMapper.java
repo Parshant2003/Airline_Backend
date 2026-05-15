@@ -1,24 +1,28 @@
 package com.parshant.location_service.mapper;
 
-import com.parshant.location_service.model.City;
+
 import com.parshant.Request.CityRequest;
 import com.parshant.Response.CityResponse;
+import com.parshant.location_service.model.City;
 
 public class CityMapper {
-    public static City toEntity(CityRequest cityRequest) {
-        if(cityRequest == null) return null;
+
+    public static City toEntity(CityRequest request) {
+        if (request == null) return null;
+
         return City.builder()
-                .name(cityRequest.getName())
-                .cityCode(cityRequest.getCityCode())
-                .countryCode(cityRequest.getCountryCode())
-                .countryName(cityRequest.getCountryName())
-                .regionCode(cityRequest.getRegionCode())
-                .timeZoneId(cityRequest.getTimeZoneOffset())
+                .name(request.getName())
+                .cityCode(request.getCityCode())
+                .countryCode(request.getCountryCode())
+                .countryName(request.getCountryName())
+                .regionCode(request.getRegionCode())
+                .timeZoneId(request.getTimeZoneOffset())
                 .build();
     }
 
     public static CityResponse toResponse(City city) {
-        if(city == null) return null;
+        if (city == null) return null;
+
         return CityResponse.builder()
                 .id(city.getId())
                 .name(city.getName())
@@ -29,29 +33,22 @@ public class CityMapper {
                 .build();
     }
 
-    public static City updateEntity(City city, CityRequest cityRequest) {
-        if(city == null || cityRequest == null) return city;
-
-        if(cityRequest.getName() != null) {
-            city.setName(cityRequest.getName());
+    public static City updateEntity(City city, CityRequest request) {
+        if (request.getName() != null) {
+            city.setName(request.getName().trim());
         }
-        if(cityRequest.getCityCode() != null) {
-            city.setCityCode(cityRequest.getCityCode());
+        if (request.getCityCode() != null) {
+            city.setCityCode(request.getCityCode().toUpperCase().trim());
         }
-        if(cityRequest.getCountryCode() != null) {
-            city.setCountryCode(cityRequest.getCountryCode());
+        if (request.getCountryCode() != null) {
+            city.setCountryCode(request.getCountryCode().toUpperCase().trim());
         }
-        if(cityRequest.getCountryName() != null) {
-            city.setCountryName(cityRequest.getCountryName());
+        if (request.getCountryName() != null) {
+            city.setCountryName(request.getCountryName().trim());
         }
-        if(cityRequest.getRegionCode() != null) {
-            city.setRegionCode(cityRequest.getRegionCode());
-        }
-        if(cityRequest.getTimeZoneOffset() != null) {
-            city.setTimeZoneId(cityRequest.getTimeZoneOffset());
+        if (request.getRegionCode() != null) {
+            city.setRegionCode(request.getRegionCode().toUpperCase().trim());
         }
         return city;
     }
-
-
 }

@@ -8,6 +8,7 @@ import com.parshant.airline_core_service.model.Airline;
 import com.parshant.airline_core_service.repository.AircraftRepository;
 import com.parshant.airline_core_service.repository.AirlineRepository;
 import com.parshant.airline_core_service.service.AircraftService;
+import com.parshant.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-//@Transactional
+@Transactional
 public class AircraftServiceImpl implements AircraftService {
 
     private final AircraftRepository aircraftRepository;
@@ -28,7 +29,7 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Override
     public AircraftResponse createAircraft(AircraftRequest request, Long ownerId)
-            throws Exception {
+            throws ResourceNotFoundException {
         Airline airline = airlineRepository.findByOwnerId(ownerId)
                 .orElseThrow(() -> new EntityNotFoundException("Airline not found for owner: " + ownerId));
 
@@ -43,10 +44,10 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     @Override
- //   @Cacheable(cacheNames = "aircrafts", key = "#id")
-    public AircraftResponse getAircraftById(Long id) throws Exception {
+    @Cacheable(cacheNames = "aircrafts", key = "#id")
+    public AircraftResponse getAircraftById(Long id) throws ResourceNotFoundException {
         Aircraft aircraft = aircraftRepository.findById(id)
-                .orElseThrow(() -> new Exception("Aircraft not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Aircraft not found with id: " + id));
         return AircraftMapper.toResponse(aircraft);
     }
 
@@ -61,14 +62,14 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     @Override
- //   @CacheEvict(cacheNames = "aircrafts", key = "#id")
+    @CacheEvict(cacheNames = "aircrafts", key = "#id")
     public AircraftResponse updateAircraft(Long id, AircraftRequest request, Long ownerId)
-            throws Exception {
+            throws ResourceNotFoundException {
         Airline airline = airlineRepository.findByOwnerId(ownerId)
                 .orElseThrow(() -> new EntityNotFoundException("Airline not found for owner: " + ownerId));
 
         Aircraft aircraft = aircraftRepository.findById(id)
-                .orElseThrow(() -> new Exception("Aircraft not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Aircraft not found with id: " + id));
 
         String oldCode = aircraft.getCode();
         AircraftMapper.updateEntity(aircraft, request, airline);
@@ -82,10 +83,10 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     @Override
-  //  @CacheEvict(cacheNames = "aircrafts", key = "#id")
-    public void deleteAircraft(Long id) throws Exception {
+    @CacheEvict(cacheNames = "aircrafts", key = "#id")
+    public void deleteAircraft(Long id) throws ResourceNotFoundException {
         Aircraft aircraft = aircraftRepository.findById(id)
-                .orElseThrow(() -> new Exception("Aircraft not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Aircraft not found with id: " + id));
         aircraftRepository.delete(aircraft);
     }
 

@@ -29,10 +29,10 @@ public class UserMapper {
                 .collect(Collectors.toList());
     }
 
-//    public static Set<UserDTO> toDTOSet(Set<User> users) {
-//        return users.stream()
-//                .map(UserMapper::toDTO)
-//                .collect(Collectors.toSet());
-//    }
+    public static Set<UserDTO> toDTOSet(Set<User> users) {
+        return users.stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toSet());
+    }
 }
 

@@ -1,6 +1,5 @@
 package com.parshant.airline_core_service.model;
 
-
 import com.parshant.emuns.AircraftStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,12 +20,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-//@Table(name = "aircrafts",
-//        indexes = {
-//                @Index(name = "idx_aircraft_code", columnList = "aircraft_code"),
-//                @Index(name = "idx_aircraft_model", columnList = "model"),
-//                @Index(name = "idx_aircraft_airline", columnList = "airline_id")
-//        })
+@Table(name = "aircrafts",
+        indexes = {
+                @Index(name = "idx_aircraft_code", columnList = "aircraft_code"),
+                @Index(name = "idx_aircraft_model", columnList = "model"),
+                @Index(name = "idx_aircraft_airline", columnList = "airline_id")
+        })
 public class Aircraft {
 
     @Id

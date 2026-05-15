@@ -1,8 +1,10 @@
 package com.parshant.user_service.controller;
 
+
 import com.parshant.Request.LoginRequest;
 import com.parshant.Response.AuthResponse;
 import com.parshant.dto.UserDTO;
+import com.parshant.exception.UserException;
 import com.parshant.user_service.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,14 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signup(
-            @RequestBody @Valid UserDTO req) throws Exception {
+            @RequestBody @Valid UserDTO req) throws UserException {
         AuthResponse response = authService.signup(req);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
-            @RequestBody @Valid LoginRequest req) throws Exception {
+            @RequestBody @Valid LoginRequest req) throws UserException {
         AuthResponse response = authService.login(req.getEmail(), req.getPassword());
         return ResponseEntity.ok(response);
     }
